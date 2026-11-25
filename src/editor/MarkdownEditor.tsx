@@ -4,6 +4,7 @@ import type { Editor, JSONContent } from '@tiptap/core'
 import { extensions } from './extensions'
 import { looksLikeMarkdown } from './looksLikeMarkdown'
 import { sliceToMarkdown } from './sliceToMarkdown'
+import { Outline } from './Outline'
 
 export function MarkdownEditor() {
   const editorRef = useRef<Editor | null>(null)
@@ -42,5 +43,10 @@ export function MarkdownEditor() {
   })
   editorRef.current = editor
 
-  return <EditorContent editor={editor} />
+  return (
+    <>
+      <EditorContent editor={editor} />
+      <Outline editor={editor} />
+    </>
+  )
 }

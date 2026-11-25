@@ -115,4 +115,19 @@ describe('MarkdownEditor', () => {
     expect(written['text/plain']).toContain('> q')
     expect(written['text/html']).toContain('<h1')
   })
+
+  test('outline lists headings, hides when none, click moves cursor to heading', async () => {
+    const { container, editor } = await mount()
+    expect(container.querySelector('nav.outline')).toBeNull()
+    editor.commands.setContent('# Alpha\n\ntext\n\n## Beta\n\nmore', { contentType: 'markdown' })
+    await waitFor(() => {
+      const items = [...container.querySelectorAll('nav.outline button')]
+      expect(items.map((b) => b.textContent)).toEqual(['Alpha', 'Beta'])
+      expect(items[1].getAttribute('data-level')).toBe('2')
+    })
+    ;(container.querySelectorAll('nav.outline button')[1] as HTMLElement).click()
+    const { $from } = editor.state.selection
+    expect($from.parent.type.name).toBe('heading')
+    expect($from.parent.textContent).toBe('Beta')
+  })
 })
