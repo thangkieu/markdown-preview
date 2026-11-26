@@ -24,7 +24,7 @@ body {
 }
 .tiptap code {
   background: rgba(135, 131, 120, 0.15);
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 0.15em 0.35em;
   font: 0.85em ui-monospace, SFMono-Regular, Menlo, monospace;
 }
