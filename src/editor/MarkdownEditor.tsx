@@ -38,8 +38,13 @@ export function MarkdownEditor() {
           if (!ed.commands.insertContent(content)) return false
           event.preventDefault()
           return true
-        } catch {
-          return false // fall back to default paste; never lose the text
+        } catch (err) {
+          // Never lose the text, and never fall back to the clipboard's HTML
+          // (it would paste the wrong thing): paste the plain text literally.
+          console.warn('markdown paste failed; pasting plain text', err)
+          event.preventDefault()
+          view.pasteText(text)
+          return true
         }
       },
       clipboardTextSerializer: (slice) =>

@@ -33,3 +33,16 @@ describe('markdown round-trip', () => {
     editor.destroy()
   })
 })
+
+describe('marks combined with inline code', () => {
+  test('bold and link wrapping inline code insert without throwing and keep both marks', () => {
+    const e = new Editor({ extensions })
+    const md = '**bold with `code` inside** and [`linked code`](https://x.com)'
+    const blocks = e.markdown!.parse(md).content ?? []
+    expect(() => e.commands.insertContent(blocks)).not.toThrow()
+    const html = e.getHTML()
+    expect(html).toMatch(/<strong>[^]*<code>code<\/code>/)
+    expect(html).toMatch(/<a [^>]*href="https:\/\/x\.com"[^>]*>[^]*<code>linked code<\/code>/)
+    e.destroy()
+  })
+})

@@ -177,4 +177,18 @@ describe('MarkdownEditor', () => {
       expect(container.querySelector('h1')?.textContent).toBe('Title')
     })
   })
+
+  test('markdown with bold-wrapped inline code pastes fully (no silent fallback)', async () => {
+    const { container, pm } = await mount()
+    paste(
+      pm,
+      '# Runbook\n\n- value order (**the listing returns `flexible_schema: null`; same value**), else x\n\n```bash\nls\n```',
+      "<meta charset='utf-8'><div><span>x</span></div>",
+    )
+    await waitFor(() => {
+      expect(container.querySelector('h1')?.textContent).toBe('Runbook')
+      expect(container.querySelector('li strong code')).not.toBeNull()
+      expect(container.querySelector('pre')).not.toBeNull()
+    })
+  })
 })
