@@ -9,7 +9,7 @@ describe('isRichHtml', () => {
     ['table', '<table><tr><td>a</td></tr></table>'],
     ['bold', 'x <strong>y</strong>'],
     ['image', '<img src="a.png">'],
-    ['our own copy', '<p data-pm-slice="1 1 []">x</p>'],
+    ['our own copy with a heading', '<h1 data-pm-slice="0 0 []">x</h1>'],
   ])('true for %s', (_n, html) => {
     expect(isRichHtml(html)).toBe(true)
   })
@@ -18,6 +18,7 @@ describe('isRichHtml', () => {
     ['empty', ''],
     ['styled spans', "<meta charset='utf-8'><div style=\"color:#000\"><span>a</span><br>b</div>"],
     ['pre wrapper', '<pre>x = 1</pre>'],
+    ['our own copy of plain paragraphs', '<p data-pm-slice="0 0 []"># x</p><p>- y</p>'],
   ])('false for %s', (_n, html) => {
     expect(isRichHtml(html)).toBe(false)
   })

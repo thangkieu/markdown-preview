@@ -143,4 +143,17 @@ describe('MarkdownEditor', () => {
       expect(container.querySelectorAll('li').length).toBe(2)
     })
   })
+
+  test('re-pasting an own copy that is only plain paragraphs of markdown text renders it', async () => {
+    const { container, pm } = await mount()
+    paste(
+      pm,
+      '# Title\n\n- a',
+      "<meta charset='utf-8'><p data-pm-slice=\"0 0 []\"># Title</p><p>- a</p>",
+    )
+    await waitFor(() => {
+      expect(container.querySelector('h1')?.textContent).toBe('Title')
+      expect(container.querySelectorAll('li').length).toBe(1)
+    })
+  })
 })

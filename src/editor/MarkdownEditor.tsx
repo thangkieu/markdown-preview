@@ -18,10 +18,11 @@ export function MarkdownEditor() {
         const data = event.clipboardData
         if (!ed || !data) return false
         const text = data.getData('text/plain')
-        // Structured HTML (web pages, our own copies) uses default paste.
-        // HTML that only wraps plain text (editors, VS Code) does not.
+        const html = data.getData('text/html') // read once; reuse
+        // Structured HTML (web pages, copies with real headings/lists) uses
+        // default paste. HTML that only wraps plain text does not.
         const fromVsCode = Array.from(data.types).includes('vscode-editor-data')
-        if (isRichHtml(data.getData('text/html')) && !fromVsCode) return false
+        if (isRichHtml(html) && !fromVsCode) return false
         if (view.state.selection.$from.parent.type.spec.code) return false
         if (!looksLikeMarkdown(text)) return false
         try {
