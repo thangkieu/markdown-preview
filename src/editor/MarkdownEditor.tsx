@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { EditorContent, useEditor } from '@tiptap/react'
 import type { Editor, JSONContent } from '@tiptap/core'
 import { extensions } from './extensions'
-import { looksLikeMarkdown } from './looksLikeMarkdown'
+import { hasStrongBlockMarkdown, looksLikeMarkdown } from './looksLikeMarkdown'
 import { sliceToMarkdown } from './sliceToMarkdown'
 import { Outline } from './Outline'
 import { isRichHtml } from './isRichHtml'
@@ -19,10 +19,13 @@ export function MarkdownEditor() {
         if (!ed || !data) return false
         const text = data.getData('text/plain')
         const html = data.getData('text/html') // read once; reuse
-        // Structured HTML (web pages, copies with real headings/lists) uses
-        // default paste. HTML that only wraps plain text does not.
+        // Structured HTML (web pages) uses default paste, unless the plain text
+        // is clearly markdown source (heading / table / fence). Copies from this
+        // editor that have real structure also use default paste.
         const fromVsCode = Array.from(data.types).includes('vscode-editor-data')
-        if (isRichHtml(html) && !fromVsCode) return false
+        const rich = isRichHtml(html) && !fromVsCode
+        if (rich && html.includes('data-pm-slice')) return false
+        if (rich && !hasStrongBlockMarkdown(text)) return false
         if (view.state.selection.$from.parent.type.spec.code) return false
         if (!looksLikeMarkdown(text)) return false
         try {

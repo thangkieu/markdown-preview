@@ -156,4 +156,25 @@ describe('MarkdownEditor', () => {
       expect(container.querySelectorAll('li').length).toBe(1)
     })
   })
+
+  test('strong block markdown is parsed even when HTML on the clipboard is rich', async () => {
+    const { container, pm } = await mount()
+    paste(
+      pm,
+      '# Title\n\n| a | b |\n|---|---|\n| 1 | 2 |',
+      '<p><strong>x</strong> <code>y</code></p><p># Title</p>',
+    )
+    await waitFor(() => {
+      expect(container.querySelector('h1')?.textContent).toBe('Title')
+      expect(container.querySelector('table')).not.toBeNull()
+    })
+  })
+
+  test('own structured copy (real heading + data-pm-slice) still uses default paste', async () => {
+    const { container, pm } = await mount()
+    paste(pm, '# Title', '<h1 data-pm-slice="0 0 []">Title</h1>')
+    await waitFor(() => {
+      expect(container.querySelector('h1')?.textContent).toBe('Title')
+    })
+  })
 })
