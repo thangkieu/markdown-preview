@@ -130,4 +130,17 @@ describe('MarkdownEditor', () => {
     expect($from.parent.type.name).toBe('heading')
     expect($from.parent.textContent).toBe('Beta')
   })
+
+  test('markdown copied from a plain-text source (styled-span HTML wrapper) is still parsed', async () => {
+    const { container, pm } = await mount()
+    paste(
+      pm,
+      '# Title\n\n- a\n- b',
+      "<meta charset='utf-8'><div style=\"color:#000\"><span style=\"white-space:pre\"># Title</span><br><span># </span>- a<br>- b</div>",
+    )
+    await waitFor(() => {
+      expect(container.querySelector('h1')?.textContent).toBe('Title')
+      expect(container.querySelectorAll('li').length).toBe(2)
+    })
+  })
 })

@@ -5,6 +5,7 @@ import { extensions } from './extensions'
 import { looksLikeMarkdown } from './looksLikeMarkdown'
 import { sliceToMarkdown } from './sliceToMarkdown'
 import { Outline } from './Outline'
+import { isRichHtml } from './isRichHtml'
 
 export function MarkdownEditor() {
   const editorRef = useRef<Editor | null>(null)
@@ -17,10 +18,10 @@ export function MarkdownEditor() {
         const data = event.clipboardData
         if (!ed || !data) return false
         const text = data.getData('text/plain')
-        // Rich HTML (web pages, our own copies) uses default paste.
-        // VS Code ships HTML for code; its plain text is what we want.
+        // Structured HTML (web pages, our own copies) uses default paste.
+        // HTML that only wraps plain text (editors, VS Code) does not.
         const fromVsCode = Array.from(data.types).includes('vscode-editor-data')
-        if (data.getData('text/html') && !fromVsCode) return false
+        if (isRichHtml(data.getData('text/html')) && !fromVsCode) return false
         if (view.state.selection.$from.parent.type.spec.code) return false
         if (!looksLikeMarkdown(text)) return false
         try {
