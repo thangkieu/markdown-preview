@@ -10,8 +10,8 @@ export function EmptyState({ editor }: { editor: Editor | null }) {
   if (!isEmpty) return null
 
   return (
-    <div className="empty-state" aria-hidden="true">
-      <svg viewBox="0 0 64 64" width="64" height="64" fill="none">
+    <div className="empty-state">
+      <svg viewBox="0 0 64 64" width="64" height="64" fill="none" aria-hidden="true">
         <rect x="3" y="11" width="58" height="42" rx="9" stroke="currentColor" strokeWidth="3" />
         <path
           d="M14 42V22h4.5l6.5 9 6.5-9H36v20h-4.5V30L25 38l-6.5-8v12z"
@@ -25,8 +25,14 @@ export function EmptyState({ editor }: { editor: Editor | null }) {
           strokeLinejoin="round"
         />
       </svg>
+      <h1 className="empty-state-heading">Markdown Preview</h1>
       <p className="empty-state-title">Paste markdown here</p>
       <p className="empty-state-hint">It renders as you paste. Select and copy to get markdown back.</p>
+      <ul className="empty-state-features">
+        <li>Tables, task lists, code blocks and blockquotes</li>
+        <li>Edit directly in the rendered view</li>
+        <li>Free, and runs in your browser: nothing is uploaded</li>
+      </ul>
     </div>
   )
 }

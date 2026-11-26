@@ -59,7 +59,8 @@ src/
     extractHeadings.ts        heading list for the outline
     Outline.tsx               floating table of contents
     EmptyState.tsx            centered empty state
-public/favicon.svg            favicon
+public/                       favicon, icons, og-image, robots.txt, sitemap.xml, _headers
+scripts/generate-images.mjs   renders PNG icons and the social preview
 docs/superpowers/             design spec and implementation plan
 ```
 
@@ -80,6 +81,14 @@ npx wrangler pages deploy dist --project-name markdown-preview
 **Cloudflare Pages (Git integration):** build command `npm run build`, output directory `dist`, env var `NODE_VERSION=22`.
 
 Any other static host works the same way (Vercel, Netlify, GitHub Pages, S3).
+
+## SEO
+
+- `index.html` carries the title, description, canonical URL, Open Graph and Twitter tags, and JSON-LD (`WebApplication`) for `https://markdown.purrspective.uk/`. If the domain changes, update it there, in `public/robots.txt`, `public/sitemap.xml` and `scripts/generate-images.mjs`; `src/seo.test.ts` pins the URL.
+- The empty state's text is also written statically inside `#root` in `index.html`, so crawlers without JavaScript see a heading and description. Keep it in sync with `EmptyState.tsx`.
+- `public/_headers` sets long-lived caching for hashed assets and basic security headers (Cloudflare).
+- Regenerate the PNG icons and the 1200x630 social preview from SVG with `node scripts/generate-images.mjs`.
+- Submit the site and `sitemap.xml` in Google Search Console to speed up indexing.
 
 ## Known limitations
 

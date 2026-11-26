@@ -3,11 +3,68 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Markdown Preview: Paste, Edit &amp; Copy Markdown Online</title>
+    <meta
+      name="description"
+      content="Free online markdown previewer. Paste markdown to see it rendered Notion-style, edit in place, and copy any selection back as markdown."
+    />
+    <link rel="canonical" href="https://markdown.purrspective.uk/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#ffffff" />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Markdown Preview</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Markdown Preview" />
+    <meta property="og:url" content="https://markdown.purrspective.uk/" />
+    <meta property="og:title" content="Markdown Preview: Paste, Edit &amp; Copy Markdown Online" />
+    <meta
+      property="og:description"
+      content="Paste markdown, see it rendered Notion-style, edit in place, and copy any selection back as markdown. Free, runs in your browser."
+    />
+    <meta property="og:image" content="https://markdown.purrspective.uk/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Markdown Preview: paste markdown, see it rendered, copy it back as markdown." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Markdown Preview: Paste, Edit &amp; Copy Markdown Online" />
+    <meta
+      name="twitter:description"
+      content="Paste markdown, see it rendered Notion-style, edit in place, and copy any selection back as markdown."
+    />
+    <meta name="twitter:image" content="https://markdown.purrspective.uk/og-image.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Markdown Preview",
+        "url": "https://markdown.purrspective.uk/",
+        "description": "Free online markdown previewer. Paste markdown to see it rendered Notion-style, edit in place, and copy any selection back as markdown.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Crawler/no-JS content. React replaces this on load; keep in sync with EmptyState.tsx. -->
+      <div class="empty-state">
+        <h1 class="empty-state-heading">Markdown Preview</h1>
+        <p class="empty-state-title">Paste markdown here</p>
+        <p class="empty-state-hint">It renders as you paste. Select and copy to get markdown back.</p>
+        <ul class="empty-state-features">
+          <li>Tables, task lists, code blocks and blockquotes</li>
+          <li>Edit directly in the rendered view</li>
+          <li>Free, and runs in your browser: nothing is uploaded</li>
+        </ul>
+        <noscript><p>Markdown Preview needs JavaScript to render your markdown.</p></noscript>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

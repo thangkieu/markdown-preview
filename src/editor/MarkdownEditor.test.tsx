@@ -30,6 +30,7 @@ describe('MarkdownEditor', () => {
     await waitFor(() => expect(empty()).not.toBeNull())
     expect(empty()!.querySelector('svg')).not.toBeNull()
     expect(empty()!.textContent).toContain('Paste markdown here')
+    expect(empty()!.querySelector('h1')?.textContent).toBe('Markdown Preview')
     editor.commands.setContent('# Hi', { contentType: 'markdown' })
     await waitFor(() => expect(empty()).toBeNull())
     editor.commands.clearContent()
