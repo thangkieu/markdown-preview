@@ -6,7 +6,6 @@ import TaskItem from '@tiptap/extension-task-item'
 import { TableKit } from '@tiptap/extension-table'
 import Code from '@tiptap/extension-code'
 import Image from '@tiptap/extension-image'
-import Placeholder from '@tiptap/extension-placeholder'
 
 export const extensions: Extensions = [
   StarterKit.configure({ link: { openOnClick: false }, code: false }),
@@ -18,5 +17,4 @@ export const extensions: Extensions = [
   TaskItem.configure({ nested: true }),
   TableKit,
   Image.configure({ inline: true }),
-  Placeholder.configure({ placeholder: 'Paste markdown here' }),
 ]

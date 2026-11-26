@@ -5,6 +5,7 @@ import { extensions } from './extensions'
 import { hasStrongBlockMarkdown, looksLikeMarkdown } from './looksLikeMarkdown'
 import { sliceToMarkdown } from './sliceToMarkdown'
 import { Outline } from './Outline'
+import { EmptyState } from './EmptyState'
 import { isRichHtml } from './isRichHtml'
 
 export function MarkdownEditor() {
@@ -56,6 +57,7 @@ export function MarkdownEditor() {
   return (
     <>
       <EditorContent editor={editor} />
+      <EmptyState editor={editor} />
       <Outline editor={editor} />
     </>
   )

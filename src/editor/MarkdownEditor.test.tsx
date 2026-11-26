@@ -24,13 +24,16 @@ async function mount() {
 }
 
 describe('MarkdownEditor', () => {
-  test('shows placeholder when empty', async () => {
-    const { container } = render(<MarkdownEditor />)
-    await waitFor(() =>
-      expect(
-        container.querySelector('[data-placeholder="Paste markdown here"]'),
-      ).not.toBeNull(),
-    )
+  test('empty state shows icon + message, and disappears once there is content', async () => {
+    const { container, editor } = await mount()
+    const empty = () => container.querySelector('.empty-state')
+    await waitFor(() => expect(empty()).not.toBeNull())
+    expect(empty()!.querySelector('svg')).not.toBeNull()
+    expect(empty()!.textContent).toContain('Paste markdown here')
+    editor.commands.setContent('# Hi', { contentType: 'markdown' })
+    await waitFor(() => expect(empty()).toBeNull())
+    editor.commands.clearContent()
+    await waitFor(() => expect(empty()).not.toBeNull())
   })
 
   test('pasting markdown renders heading and blockquote', async () => {
